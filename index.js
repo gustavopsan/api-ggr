@@ -53,5 +53,5 @@ app.post("/sendMail", (req, res) => {
 })
 
 const server = http.createServer(app);
-server.listen(PORT);
+server.listen(process.env.PORT || PORT);
 console.log(`API - Init: Server listening on port ${PORT}.`)
