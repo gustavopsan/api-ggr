@@ -26,8 +26,8 @@ app.post("/sendMail", (req, res) => {
         port: 587,
         secure: false,
         auth: {
-            user: "ggr.mkt.consultoria@gmail.com",
-            pass: "ufal@123"
+            user: process.env.gmail_account,
+            pass: process.env.gmail_password
         }
     })
 
@@ -35,7 +35,7 @@ app.post("/sendMail", (req, res) => {
         from: "'GGR Marketing e Consultoria' ggr.mkt.consultoria@gmail.com",
         to: req.body.destination,
         subject: req.body.subject,
-        //text: req.body.text,
+        text: req.body.text,
         html: req.body.html
     }
 
