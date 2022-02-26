@@ -1,20 +1,25 @@
-const http = require("http");
-const express = require("express");
-const bodyParser = require("body-parser");
-const PORT = 3000;
-const nodemailer = require('nodemailer');
+const express = require('express')
+const bodyParser = require('body-parser')
+const cors = require('cors');
+const app = express()
+const nodemailer = require("nodemailer")
 
-const app = express();
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", 'GET,PUT,POST,DELETE');
+    app.use(cors());
+    next();
+});
 app.use(bodyParser.json());
 
-app.get("/", (req, res)=>{
+app.get("/", res => {
     res.json({
         message: "Server initializated."
     })
 })
 
 app.post("/sendMail", (req, res) => {
-    console.info("API - Send Mail: Initializing new mail");
+    console.info("API - Send Mail: Initializing new mail");;
 
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
@@ -30,7 +35,7 @@ app.post("/sendMail", (req, res) => {
         from: "'GGR Marketing e Consultoria' ggr.mkt.consultoria@gmail.com",
         to: req.body.destination,
         subject: req.body.subject,
-        text: req.body.text,
+        //text: req.body.text,
         html: req.body.html
     }
 
@@ -52,6 +57,4 @@ app.post("/sendMail", (req, res) => {
 
 })
 
-const server = http.createServer(app);
-server.listen(process.env.PORT || PORT);
-console.log(`API - Init: Server listening on port ${PORT}.`)
+app.listen(process.env.PORT || 3000);
