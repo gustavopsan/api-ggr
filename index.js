@@ -12,7 +12,7 @@ app.use((req, res, next) => {
 });
 app.use(bodyParser.json());
 
-app.get("/", res => {
+app.get("/", (req, res) => {
     res.json({
         message: "Server initializated."
     })
