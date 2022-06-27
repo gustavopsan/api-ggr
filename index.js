@@ -4,23 +4,26 @@ const cors = require('cors');
 const app = express()
 const nodemailer = require("nodemailer")
 
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.header("Access-Control-Allow-Methods", 'GET,PUT,POST,DELETE');
-    app.use(cors());
-    next();
-});
+app.use(
+    (req, res, next) => {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        res.header("Access-Control-Allow-Methods", 'GET,PUT,POST,DELETE');
+        app.use(cors());
+        next();
+    }
+);
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
     res.json({
+        status: "success",
         message: "Server initializated."
     })
 })
 
 app.post("/sendMail", (req, res) => {
-    console.info("API - Send Mail: Initializing new mail");;
+    console.info("API - Send Mail: Initializing new mail");
 
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
